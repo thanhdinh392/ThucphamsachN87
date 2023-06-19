@@ -1,0 +1,13 @@
+.loader-spinner {
+  display: inline-block;
+  border-radius: 50%;
+  background: conic-gradient(#0000 10%, #8f44fd);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 6px), #000 0);
+  animation: load-spin 0.8s infinite linear;
+}
+
+@keyframes load-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
