@@ -13,6 +13,9 @@ const orderApi = {
   getOrderByOrderId: async (orderId) => {
     return await axiosClient.get(`/orders/${orderId}`);
   },
+  getTotalRevenue: async () => {
+    return await axiosClient.get('/orders/get-total-revenue');
+  },
   updateStatusOrder: async (orderId, order) => {
     return await axiosClient.patch(`/orders/${orderId}`, order);
   },

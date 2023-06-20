@@ -30,8 +30,8 @@ const shippingStatusOptions = [
     label: 'Đang vận chuyển',
   },
   {
-    value: 'Giao hàng thàng công',
-    label: 'Giao hàng thàng công',
+    value: 'Giao hàng thành công',
+    label: 'Giao hàng thành công',
   },
 ];
 
