@@ -16,6 +16,9 @@ const orderApi = {
   getTotalRevenue: async () => {
     return await axiosClient.get('/orders/get-total-revenue');
   },
+  getCompareTwoMonthRevenue: async () => {
+    return await axiosClient.get('/orders/get-compare-two-month-revenue');
+  },
   updateStatusOrder: async (orderId, order) => {
     return await axiosClient.patch(`/orders/${orderId}`, order);
   },

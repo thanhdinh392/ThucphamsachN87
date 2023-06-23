@@ -315,7 +315,7 @@ const Header = () => {
         <div className='mr-3.5 ml-2.5 md:ml-0'>
           <Link to='/cart' className='relative'>
             <i className='md:p-1.5 fa-solid fa-cart-shopping'></i>
-            {currentUser && !cart.isLoading && (
+            {currentUser && !cart.isLoading && cart.products.length > 0 && (
               <span className='flex gradient-primary absolute text-white text-sm bottom-[80%] left-[50%] top-[-70%] w-[26px] h-[26px] rounded-full items-center justify-center'>
                 {cart.products.length <= 99 ? cart.products.length : '99+'}
               </span>

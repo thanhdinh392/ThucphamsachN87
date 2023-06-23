@@ -7,10 +7,27 @@ import categoryApi from './../../api/categoryApi';
 import userApi from './../../api/userApi';
 import inventoryApi from '../../api/inventoryApi';
 import { LoadingCenter } from '../../components/Loading';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+} from 'chart.js';
+import { Bar, Pie } from 'react-chartjs-2';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title
+);
 
 const DashBoard = () => {
   const [totalOrders, setTotalOrders] = useState(0);
@@ -22,6 +39,31 @@ const DashBoard = () => {
   const [topSellingProducts, setTopSellingProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [dataChart, setDataChart] = useState({});
+  const [dataChartRevenue, setDataChartRevenue] = useState({
+    datasets: [
+      {
+        label: 'doanh thu',
+        data: [],
+        borderColor: 'rgb(14, 165, 233 )',
+        backgroundColor: 'rgba(14, 165, 233 ,0.5)',
+      },
+    ],
+  });
+
+  const options = {
+    indexAxis: 'y',
+    elements: {
+      bar: {
+        borderWidth: 2,
+      },
+    },
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'right',
+      },
+    },
+  };
 
   const getOrders = async () => {
     try {
@@ -123,6 +165,33 @@ const DashBoard = () => {
     }
   };
 
+  const getCompareTwoMonthRevenue = async () => {
+    const currentMonth = new Date().getMonth() + 1;
+    const preMonth = currentMonth - 1;
+
+    const labels = [`Tháng ${preMonth}`, `Tháng ${currentMonth}`];
+    try {
+      const res = await orderApi.getCompareTwoMonthRevenue();
+      setDataChartRevenue({
+        labels,
+        datasets: [
+          {
+            label: 'doanh thu',
+            data: [
+              res.data.totalRevenuePreMonth,
+              res.data.totalRevenueCurrentMonth,
+            ],
+            borderColor: 'rgb(14, 165, 233 )',
+            backgroundColor: 'rgba(14, 165, 233 ,0.5)',
+          },
+        ],
+      });
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getTopSellingProducts = async () => {
     try {
       const res = await productApi.getTopSellingProducts({
@@ -149,6 +218,7 @@ const DashBoard = () => {
           getAllQuantityOfProductInInventory(),
           getTotalRevenue(),
           getTopSellingProducts(),
+          getCompareTwoMonthRevenue(),
         ])
           .then(() => {})
           .finally(() => {
@@ -160,6 +230,8 @@ const DashBoard = () => {
     };
     getData();
   }, []);
+
+  console.log(dataChartRevenue);
 
   return (
     <div className='pt-8 mb-3.5'>
@@ -243,8 +315,8 @@ const DashBoard = () => {
               </div>
             </Link>
           </div>
-          <div className='grid grid-cols-2 gap-x-6'>
-            <div>
+          <div className='flex mb-3 gap-x-10'>
+            <div className='w-[50%]'>
               <h3 className='mb-3 text-2xl font-semibold'>
                 Top sản phẩm bán chạy
               </h3>
@@ -280,12 +352,18 @@ const DashBoard = () => {
                   })}
               </div>
             </div>
-            <div>
+            <div className='w-[50%]'>
               <h3 className='mb-3 text-2xl font-semibold'>
                 Trạng thái đơn hàng
               </h3>
-              <div className='mx-auto w-[45%]'>
+              <div className='mx-auto w-[80%] desktop:w-[60%]'>
                 <Pie data={dataChart} />
+              </div>
+              <h3 className='mt-10 mb-3 text-2xl font-semibold'>
+                Thống kê doanh thu
+              </h3>
+              <div className='w-full desktop:w-[60%] mx-auto'>
+                <Bar options={options} data={dataChartRevenue} />
               </div>
             </div>
           </div>

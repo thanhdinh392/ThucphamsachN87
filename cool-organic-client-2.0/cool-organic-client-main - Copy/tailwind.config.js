@@ -12,6 +12,7 @@ module.exports = {
       },
       screens: {
         lg: '1025px',
+        desktop: '1440px',
         '3xl': '1700px',
       },
     },
