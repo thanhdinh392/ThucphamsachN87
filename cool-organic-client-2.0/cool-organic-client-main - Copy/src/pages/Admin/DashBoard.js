@@ -186,7 +186,6 @@ const DashBoard = () => {
           },
         ],
       });
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -230,8 +229,6 @@ const DashBoard = () => {
     };
     getData();
   }, []);
-
-  console.log(dataChartRevenue);
 
   return (
     <div className='pt-8 mb-3.5'>
