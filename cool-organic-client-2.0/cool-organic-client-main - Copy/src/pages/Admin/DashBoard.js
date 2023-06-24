@@ -356,13 +356,13 @@ const DashBoard = () => {
               <h3 className='mb-3 text-2xl font-semibold'>
                 Trạng thái đơn hàng
               </h3>
-              <div className='mx-auto w-[80%] desktop:w-[60%]'>
+              <div className='w-[80%] desktop:w-[60%]'>
                 <Pie data={dataChart} />
               </div>
               <h3 className='mt-10 mb-3 text-2xl font-semibold'>
                 Thống kê doanh thu
               </h3>
-              <div className='w-full desktop:w-[60%] mx-auto'>
+              <div className='w-full'>
                 <Bar options={options} data={dataChartRevenue} />
               </div>
             </div>
