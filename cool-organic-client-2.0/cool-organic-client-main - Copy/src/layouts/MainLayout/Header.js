@@ -289,7 +289,7 @@ const Header = () => {
                 className='block w-full h-full py-2 text-base text-center text-black border rounded-full hover:text-white hover:bg-primaryColor hover:bg-none border-borderColor'
                 onClick={() => {
                   dispatch(removeCurrentUser());
-                  window.location.reload();
+                  navigate('/');
                 }}
               >
                 Đăng xuất
