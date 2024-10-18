@@ -100,14 +100,13 @@ const CheckOut = () => {
     const getCities = async () => {
       try {
         const res = await axios.get(
-          'https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1'
+          'https://vapi.vnappmob.com/api/province/'
         );
 
-        const cities = res.data.data.data;
-
+        const cities = res.data.results
         const cityOptions = cities.map((city) => ({
-          value: city.code,
-          label: city.name,
+          value: city.province_id,
+          label: city.province_name,
         }));
 
         setCityOptions(cityOptions);
@@ -125,14 +124,14 @@ const CheckOut = () => {
   const getDistricts = async (city) => {
     try {
       const res = await axios.get(
-        `https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=${city.value}&limit=-1`
+        `https://vapi.vnappmob.com/api/province/district/${city.value}`
       );
 
-      const districts = res.data.data.data;
+      const districts = res.data.results;
 
       const districtOptions = districts.map((district) => ({
-        value: district.code,
-        label: district.name_with_type,
+        value: district.district_id,
+        label: district.district_name,
       }));
 
       setDistrictOptions(districtOptions);
@@ -148,14 +147,14 @@ const CheckOut = () => {
   const getWards = async (district) => {
     try {
       const res = await axios.get(
-        `https://vn-public-apis.fpo.vn/wards/getByDistrict?districtCode=${district.value}&limit=-1`
+        `https://vapi.vnappmob.com/api/province/ward/${district.value}`
       );
 
-      const wards = res.data.data.data;
+      const wards = res.data.results;
 
       const wardOptions = wards.map((ward) => ({
-        value: ward.code,
-        label: ward.name_with_type,
+        value: ward.ward_id,
+        label: ward.ward_name,
       }));
 
       setWardOptions(wardOptions);
